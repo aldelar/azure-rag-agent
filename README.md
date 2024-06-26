@@ -1,6 +1,6 @@
 # Building a RAG agent in Azure
 
-This repo focuses on building a simple but scalable project to deliver a RAG agent in Azure. It implements a good foundation which can be customized and made production ready with LLMOps in mind. It is minimal but outlines all the key principles and requirements for a production RAG agent.
+This repo focuses on building a simple but scalable project to deliver a RAG agent in Azure. It implements a good foundation which can be customized and made production ready with LLMOps in mind. It is minimal but outlines all the key principles and requirements for a production RAG agent. This is not intendeded to go to production as is, but as a reference starting point for a production project.
 
 Two main parts will be outlined in this minimal project to get you started with such a project:
 - data ingestion into an AI Search index, including automatic document discovery, contextual chunking and encrichment to produce rich and precise medatada to support accurate retrieval
@@ -43,7 +43,9 @@ To run this project, you need to have an Azure subscription and the following se
 - Azure OpenAI
 - Azure AI Search
 
-The credentials of these services are assumed to be present in the default Azure Key Vault of the Azure ML Workspace. See codebase for keys used to locate these secrets.
+The credentials of these services are assumed to be present in the default Azure Key Vault of the Azure ML Workspace. See codebase for keys used to locate these secrets or refer to step 5. below.
+
+The Azure ML workspace needs to have a datastore named 'datalake' created, under which a folder named 'ara-d2i/docs' should contain all the documents to be indexed. The easiest way to do this is to locate the default blobstore of your workspace, and create a new container named 'datalake' in it, and then upload the documents to the 'ara-d2i/docs' folder. Then go to AML/Data and create a new 'Datastore' which points to that container.
 
 ## Local Environment Setup
 
@@ -88,3 +90,7 @@ To trigger a pipeline creation/update/run, execute the following:
 az ml job create -f pipeline.yml
 ```
 Then go to the Azure portal to monitor your pipeline.
+
+At this point you have a highly scalable pipeline (*) which does basic contextual chunking of any of the document type supported by leveraging the Markdown output of the Azure Document Intelligence service, and the vectorization of the text using the OpenAI service. The output is then indexed in Azure AI Search.
+
+(*) The serverless compute can be scale vertically and horizontally at will, and the platform will distribute the workload to index to all compute available.
