@@ -6,7 +6,6 @@ from azure.core.credentials import AzureKeyCredential
 from azureml.core import Run, Workspace
 from azure.ai.documentintelligence import DocumentIntelligenceClient
 from azure.ai.documentintelligence.models import AnalyzeDocumentRequest
-from azure.ai.documentintelligence.models import AnalyzeResult
 
 # get keys from Azure Key Vault
 try:
@@ -52,7 +51,7 @@ def run(mini_batch):
 		json_file_name = doc_file_name+'.json'
 		json_file_path = os.path.join(json_folder_path, json_file_name)
 		with open(doc_file_path, "rb") as f:
-			analyze_request = AnalyzeDocumentRequest(base64_source=base64.b64encode(f.read()).decode("utf-8"))
+			analyze_request = AnalyzeDocumentRequest(bytes_source=base64.b64encode(f.read()).decode("utf-8"))
 			layout = analyze_layout(analyze_request)
 			# adding metadata
 			layout['document_name'] = doc_file_name
