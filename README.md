@@ -4,7 +4,7 @@ This repo focuses on building a simple but scalable project to deliver a RAG age
 
 Two main parts will be outlined in this minimal project to get you started with such a project:
 - data ingestion into an AI Search index, including automatic document discovery, contextual chunking and encrichment to produce rich and precise medatada to support accurate retrieval
-- (upcoming) a simple RAG agent to answer questions based on the indexed documents, based on a Prompt Flow built in Azure AI
+- (not covered at this point) a simple RAG agent to answer questions based on the indexed documents, based on a Prompt Flow built in Azure AI
 
 # Data Ingestion: Azure ML enrichment pipeline to index documents
 
